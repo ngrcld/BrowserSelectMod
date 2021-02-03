@@ -6,6 +6,8 @@ using System.Windows.Forms;
 
 using Microsoft.Win32;
 
+using Newtonsoft.Json;
+
 using BrowserSelect.Properties;
 
 namespace BrowserSelect
@@ -15,9 +17,12 @@ namespace BrowserSelect
     //=============================================================================================================
     {
         private bool isLoaded = false;
-        private bool isDirty = false; 
+        private bool isDirty = false;
         private bool isDirtyUI = false;
+        private bool isDirtyCache = false;
+
         private BrowserSelectView parentView;
+        List<BrowserModel> browsers;
         private ObservableCollection<RuleModel> rules = new ObservableCollection<RuleModel>();
 
         //-------------------------------------------------------------------------------------------------------------
@@ -52,7 +57,7 @@ namespace BrowserSelect
 
             //populate list of browsers for RulesGrid, BrowserList, and DefaultBrowserList
             BrowserFinder finder = new BrowserFinder();
-            var browsers = finder.FindBrowsers();
+            browsers = finder.FindBrowsers();
 
             var browserColumn = ((DataGridViewComboBoxColumn)RulesGrid.Columns["browser"]);
             DefaultBrowserList.Items.Add("<choose with BrowserSelect>");
@@ -150,6 +155,11 @@ namespace BrowserSelect
 
             }
 
+            if (isDirtyCache)
+            {
+                Settings.Default.CachedBrowserList = JsonConvert.SerializeObject(browsers);
+            }
+
             if (isDirty)
             {
                 //save settings
@@ -163,6 +173,8 @@ namespace BrowserSelect
 
             //Update UI
             isDirty = false;
+            isDirtyUI = false;
+            isDirtyCache = false;
             UpdateUIState();
 
             Close();
@@ -180,9 +192,15 @@ namespace BrowserSelect
         private void RefreshButton_Click(object sender, EventArgs e)
         //-------------------------------------------------------------------------------------------------------------
         {
+            var mbox = MessageBox.Show("Refreshing the browser list will remove any custom ordering set on the list.  Are you sure?",
+                                       "Refresh Browser List",
+                                       MessageBoxButtons.YesNo);
+            if (mbox == DialogResult.No)
+                return;
+
             //populate list of browsers for RulesGrid, BrowserList, and DefaultBrowserList
             BrowserFinder finder = new BrowserFinder();
-            List<BrowserModel> browsers = finder.FindBrowsers(true);
+            browsers = finder.FindBrowsers(true);
 
             var browserColumn = ((DataGridViewComboBoxColumn)RulesGrid.Columns["browser"]);
             browserColumn.Items.Clear();
@@ -227,6 +245,69 @@ namespace BrowserSelect
         }
 
         //-------------------------------------------------------------------------------------------------------------
+        private void BrowserUpButton_Click(object sender, EventArgs e)
+        //-------------------------------------------------------------------------------------------------------------
+        {
+            int idxSelected = BrowserList.SelectedIndex;
+            if (idxSelected != 0)
+            {
+                int idxNew = idxSelected - 1;
+                
+                BrowserModel modelSelected = new BrowserModel();
+                modelSelected = browsers[idxSelected];
+                browsers[idxSelected] = browsers[idxNew];
+                BrowserList.Items[idxSelected] = browsers[idxNew];
+                BrowserList.SetItemChecked(idxSelected, !Settings.Default.HiddenBrowsers.Contains(browsers[idxNew].Identifier));
+                browsers[idxNew] = modelSelected;
+                BrowserList.Items[idxNew] = browsers[idxNew];
+                BrowserList.SetItemChecked(idxNew, !Settings.Default.HiddenBrowsers.Contains(browsers[idxNew].Identifier));
+
+                BrowserList.SelectedIndex = idxNew;
+
+                isDirty = true;
+                isDirtyUI = true;
+                isDirtyCache = true;
+
+                UpdateUIState();
+            }
+        }
+
+        //-------------------------------------------------------------------------------------------------------------
+        private void BrowserList_SelectedIndexChanged(object sender, EventArgs e)
+        //-------------------------------------------------------------------------------------------------------------
+        {
+            UpdateUIState();
+        }
+
+        //-------------------------------------------------------------------------------------------------------------
+        private void BrowserDownButton_Click(object sender, EventArgs e)
+        //-------------------------------------------------------------------------------------------------------------
+        {
+            int idxSelected = BrowserList.SelectedIndex;
+            if (idxSelected < (BrowserList.Items.Count-1))
+            {
+                int idxNew = idxSelected + 1;
+
+                BrowserModel browserSelected = new BrowserModel();
+                browserSelected = browsers[idxSelected];
+                browsers[idxSelected] = browsers[idxNew];
+                BrowserList.Items[idxSelected] = browsers[idxNew];
+                BrowserList.SetItemChecked(idxSelected, !Settings.Default.HiddenBrowsers.Contains(browsers[idxNew].Identifier));
+                browsers[idxNew] = browserSelected;
+                BrowserList.Items[idxNew] = browsers[idxNew];
+                BrowserList.SetItemChecked(idxNew, !Settings.Default.HiddenBrowsers.Contains(browsers[idxNew].Identifier));
+
+                BrowserList.SelectedIndex = idxNew;
+
+                isDirty = true;
+                isDirtyUI = true;
+                isDirtyCache = true;
+
+                UpdateUIState();
+            }
+        }
+
+        //-------------------------------------------------------------------------------------------------------------
         private void DefaultBrowserList_SelectedIndexChanged(object sender, EventArgs e)
         //-------------------------------------------------------------------------------------------------------------
         {
@@ -237,12 +318,12 @@ namespace BrowserSelect
         }
 
         //-------------------------------------------------------------------------------------------------------------
-        private void UpButton_Click(object sender, EventArgs e)
+        private void RuleUpButton_Click(object sender, EventArgs e)
         //-------------------------------------------------------------------------------------------------------------
         {
             int rowCurrent = RulesGrid.CurrentCell.RowIndex;
             int colCurrent = RulesGrid.CurrentCell.ColumnIndex;
-            if (rowCurrent > 0)
+            if (rowCurrent != 0)
             {
                 int rowNew = rowCurrent - 1;
                 rules.Move(rowCurrent, rowNew);
@@ -255,12 +336,12 @@ namespace BrowserSelect
         }
 
         //-------------------------------------------------------------------------------------------------------------
-        private void DownButton_Click(object sender, EventArgs e)
+        private void RuleDownButton_Click(object sender, EventArgs e)
         //-------------------------------------------------------------------------------------------------------------
         {
             int rowCurrent = RulesGrid.CurrentCell.RowIndex;
             int colCurrent = RulesGrid.CurrentCell.ColumnIndex;
-            if ((rowCurrent != -1) && (rowCurrent < rules.Count-1))
+            if (rowCurrent < (rules.Count-1))
             {
                 int rowNew = rowCurrent + 1;
                 rules.Move(rowCurrent, rowNew);
@@ -311,8 +392,12 @@ namespace BrowserSelect
         //-------------------------------------------------------------------------------------------------------------
         {
             int rowCurrent = (RulesGrid.CurrentCell != null) ? RulesGrid.CurrentCell.RowIndex : -1;
-            UpButton.Enabled = (rowCurrent != 0);
-            DownButton.Enabled = (rowCurrent < rules.Count-1);
+            RuleUpButton.Enabled = (rowCurrent != 0);
+            RuleDownButton.Enabled = (rowCurrent < (rules.Count-1));
+
+            int idxCurrent = BrowserList.SelectedIndex;
+            BrowserUpButton.Enabled = (idxCurrent != 0);
+            BrowserDownButton.Enabled = (idxCurrent < (BrowserList.Items.Count-1));
 
             SaveButton.Enabled = isDirty;
         }

@@ -28,11 +28,14 @@
             this.SetDefaultButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.RefreshButton = new System.Windows.Forms.Button();
+            this.BrowserDownButton = new System.Windows.Forms.Button();
             this.BrowserList = new System.Windows.Forms.CheckedListBox();
+            this.BrowserUpButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.DownButton = new System.Windows.Forms.Button();
-            this.UpButton = new System.Windows.Forms.Button();
+            this.RuleDownButton = new System.Windows.Forms.Button();
+            this.RuleUpButton = new System.Windows.Forms.Button();
             this.DefaultBrowserList = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.LinkLabel();
@@ -41,7 +44,6 @@
             this.type = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.pattern = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.browser = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.RefreshButton = new System.Windows.Forms.Button();
             CancelButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -53,7 +55,7 @@
             // 
             CancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             CancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            CancelButton.Location = new System.Drawing.Point(445, 431);
+            CancelButton.Location = new System.Drawing.Point(445, 511);
             CancelButton.Name = "CancelButton";
             CancelButton.Size = new System.Drawing.Size(75, 23);
             CancelButton.TabIndex = 8;
@@ -87,13 +89,38 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox1.Controls.Add(this.RefreshButton);
+            this.groupBox1.Controls.Add(this.BrowserDownButton);
             this.groupBox1.Controls.Add(this.BrowserList);
+            this.groupBox1.Controls.Add(this.BrowserUpButton);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(220, 325);
+            this.groupBox1.Size = new System.Drawing.Size(220, 435);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Available Browsers";
+            // 
+            // RefreshButton
+            // 
+            this.RefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.RefreshButton.Location = new System.Drawing.Point(6, 406);
+            this.RefreshButton.Name = "RefreshButton";
+            this.RefreshButton.Size = new System.Drawing.Size(217, 23);
+            this.RefreshButton.TabIndex = 2;
+            this.RefreshButton.Text = "&Refresh Browser List";
+            this.RefreshButton.UseVisualStyleBackColor = true;
+            this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
+            // 
+            // BrowserDownButton
+            // 
+            this.BrowserDownButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BrowserDownButton.Location = new System.Drawing.Point(142, 377);
+            this.BrowserDownButton.Name = "BrowserDownButton";
+            this.BrowserDownButton.Size = new System.Drawing.Size(75, 23);
+            this.BrowserDownButton.TabIndex = 14;
+            this.BrowserDownButton.Text = "Down";
+            this.BrowserDownButton.UseVisualStyleBackColor = true;
+            this.BrowserDownButton.Click += new System.EventHandler(this.BrowserDownButton_Click);
             // 
             // BrowserList
             // 
@@ -102,16 +129,28 @@
             this.BrowserList.FormattingEnabled = true;
             this.BrowserList.Location = new System.Drawing.Point(3, 16);
             this.BrowserList.Name = "BrowserList";
-            this.BrowserList.Size = new System.Drawing.Size(214, 304);
+            this.BrowserList.Size = new System.Drawing.Size(214, 349);
             this.BrowserList.TabIndex = 0;
             this.BrowserList.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.BrowserList_ItemCheck);
+            this.BrowserList.SelectedIndexChanged += new System.EventHandler(this.BrowserList_SelectedIndexChanged);
+            // 
+            // BrowserUpButton
+            // 
+            this.BrowserUpButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BrowserUpButton.Location = new System.Drawing.Point(6, 377);
+            this.BrowserUpButton.Name = "BrowserUpButton";
+            this.BrowserUpButton.Size = new System.Drawing.Size(75, 23);
+            this.BrowserUpButton.TabIndex = 13;
+            this.BrowserUpButton.Text = "Up";
+            this.BrowserUpButton.UseVisualStyleBackColor = true;
+            this.BrowserUpButton.Click += new System.EventHandler(this.BrowserUpButton_Click);
             // 
             // groupBox2
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox2.Controls.Add(this.SetDefaultButton);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Location = new System.Drawing.Point(15, 373);
+            this.groupBox2.Location = new System.Drawing.Point(15, 453);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(214, 99);
             this.groupBox2.TabIndex = 0;
@@ -122,8 +161,8 @@
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox3.Controls.Add(this.DownButton);
-            this.groupBox3.Controls.Add(this.UpButton);
+            this.groupBox3.Controls.Add(this.RuleDownButton);
+            this.groupBox3.Controls.Add(this.RuleUpButton);
             this.groupBox3.Controls.Add(this.DefaultBrowserList);
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Controls.Add(CancelButton);
@@ -132,39 +171,39 @@
             this.groupBox3.Controls.Add(this.RulesGrid);
             this.groupBox3.Location = new System.Drawing.Point(235, 12);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(607, 460);
+            this.groupBox3.Size = new System.Drawing.Size(607, 540);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Rules";
             // 
-            // DownButton
+            // RuleDownButton
             // 
-            this.DownButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.DownButton.Location = new System.Drawing.Point(86, 408);
-            this.DownButton.Name = "DownButton";
-            this.DownButton.Size = new System.Drawing.Size(75, 23);
-            this.DownButton.TabIndex = 12;
-            this.DownButton.Text = "&Down";
-            this.DownButton.UseVisualStyleBackColor = true;
-            this.DownButton.Click += new System.EventHandler(this.DownButton_Click);
+            this.RuleDownButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.RuleDownButton.Location = new System.Drawing.Point(86, 488);
+            this.RuleDownButton.Name = "RuleDownButton";
+            this.RuleDownButton.Size = new System.Drawing.Size(75, 23);
+            this.RuleDownButton.TabIndex = 12;
+            this.RuleDownButton.Text = "&Down";
+            this.RuleDownButton.UseVisualStyleBackColor = true;
+            this.RuleDownButton.Click += new System.EventHandler(this.RuleDownButton_Click);
             // 
-            // UpButton
+            // RuleUpButton
             // 
-            this.UpButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.UpButton.Location = new System.Drawing.Point(5, 408);
-            this.UpButton.Name = "UpButton";
-            this.UpButton.Size = new System.Drawing.Size(75, 23);
-            this.UpButton.TabIndex = 11;
-            this.UpButton.Text = "&Up";
-            this.UpButton.UseVisualStyleBackColor = true;
-            this.UpButton.Click += new System.EventHandler(this.UpButton_Click);
+            this.RuleUpButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.RuleUpButton.Location = new System.Drawing.Point(5, 488);
+            this.RuleUpButton.Name = "RuleUpButton";
+            this.RuleUpButton.Size = new System.Drawing.Size(75, 23);
+            this.RuleUpButton.TabIndex = 11;
+            this.RuleUpButton.Text = "&Up";
+            this.RuleUpButton.UseVisualStyleBackColor = true;
+            this.RuleUpButton.Click += new System.EventHandler(this.RuleUpButton_Click);
             // 
             // DefaultBrowserList
             // 
             this.DefaultBrowserList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.DefaultBrowserList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.DefaultBrowserList.FormattingEnabled = true;
-            this.DefaultBrowserList.Location = new System.Drawing.Point(220, 431);
+            this.DefaultBrowserList.Location = new System.Drawing.Point(220, 511);
             this.DefaultBrowserList.Name = "DefaultBrowserList";
             this.DefaultBrowserList.Size = new System.Drawing.Size(219, 21);
             this.DefaultBrowserList.TabIndex = 10;
@@ -174,7 +213,7 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(5, 436);
+            this.label3.Location = new System.Drawing.Point(5, 516);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(209, 13);
             this.label3.TabIndex = 9;
@@ -197,7 +236,7 @@
             this.SaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.SaveButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.SaveButton.Enabled = false;
-            this.SaveButton.Location = new System.Drawing.Point(526, 431);
+            this.SaveButton.Location = new System.Drawing.Point(526, 511);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(75, 23);
             this.SaveButton.TabIndex = 5;
@@ -217,7 +256,7 @@
             this.browser});
             this.RulesGrid.Location = new System.Drawing.Point(6, 34);
             this.RulesGrid.Name = "RulesGrid";
-            this.RulesGrid.Size = new System.Drawing.Size(595, 367);
+            this.RulesGrid.Size = new System.Drawing.Size(595, 447);
             this.RulesGrid.TabIndex = 1;
             this.RulesGrid.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.RulesGrid_CellBeginEdit);
             this.RulesGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.RulesGrid_CellClick);
@@ -250,24 +289,12 @@
             this.browser.Name = "browser";
             this.browser.Width = 51;
             // 
-            // RefreshButton
-            // 
-            this.RefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.RefreshButton.Location = new System.Drawing.Point(12, 340);
-            this.RefreshButton.Name = "RefreshButton";
-            this.RefreshButton.Size = new System.Drawing.Size(217, 23);
-            this.RefreshButton.TabIndex = 2;
-            this.RefreshButton.Text = "&Refresh Browser List";
-            this.RefreshButton.UseVisualStyleBackColor = true;
-            this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
-            // 
             // SettingsView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = CancelButton;
-            this.ClientSize = new System.Drawing.Size(854, 481);
-            this.Controls.Add(this.RefreshButton);
+            this.ClientSize = new System.Drawing.Size(854, 561);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -303,7 +330,9 @@
         private System.Windows.Forms.DataGridViewComboBoxColumn browser;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox DefaultBrowserList;
-        private System.Windows.Forms.Button DownButton;
-        private System.Windows.Forms.Button UpButton;
+        private System.Windows.Forms.Button RuleDownButton;
+        private System.Windows.Forms.Button RuleUpButton;
+        private System.Windows.Forms.Button BrowserDownButton;
+        private System.Windows.Forms.Button BrowserUpButton;
     }
 }
