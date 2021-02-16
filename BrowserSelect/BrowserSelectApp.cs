@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.Net;
+using System.Net.Security;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
+using System.Web;
 using System.Windows.Forms;
 
 using BrowserSelect.Properties;
@@ -57,6 +61,61 @@ namespace BrowserSelect
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new BrowserSelectView());
+        }
+
+        //-------------------------------------------------------------------------------------------------------------
+        private static Uri UriExpander(Uri uri)
+        //-------------------------------------------------------------------------------------------------------------
+        {
+            // always expand microsoft safelinks
+            if (uri.Host.EndsWith("safelinks.protection.outlook.com"))
+            {
+                var queryDict = HttpUtility.ParseQueryString(uri.Query);
+                if (queryDict != null && queryDict.Get("url") != null)
+                {
+                    uri = new UriBuilder(HttpUtility.UrlDecode(queryDict.Get("url"))).Uri;
+                }
+            }
+
+            if (Settings.Default.RedirectPolicy == "First Redirect" || Settings.Default.RedirectPolicy == "All Redirects")
+            {
+                bool followAllRedirects = (Settings.Default.RedirectPolicy == "All Redirects");
+                ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(AcceptAllCertificates);
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | (SecurityProtocolType)768 | (SecurityProtocolType)3072 | SecurityProtocolType.Ssl3; //SecurityProtocolType.Tls12;
+                var webRequest = (HttpWebRequest)WebRequest.Create(uri.AbsoluteUri);
+                webRequest.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv: 85.0) Gecko/20100101 Firefox/85.0";
+                webRequest.AllowAutoRedirect = followAllRedirects;
+                try
+                {
+                    var response = (HttpWebResponse)webRequest.GetResponse();
+                    if ((int)response.StatusCode == 307)
+                    {
+                        uri = UriExpander(new UriBuilder(response.Headers["Location"]).Uri);
+                    }
+                    else if ((int)response.StatusCode == 301 || (int)response.StatusCode == 302)
+                    {
+                        uri = new UriBuilder(response.Headers["Location"]).Uri;
+                    }
+                    else
+                    {
+                        ServicePoint sp = webRequest.ServicePoint;
+                        //Console.WriteLine("Final URL address is " + sp.Address.ToString());
+                        uri = new UriBuilder(sp.Address.ToString()).Uri;
+                    }
+                }
+                catch (Exception /*ex*/)
+                {
+                }
+            }
+
+            return uri;
+        }
+
+        //-------------------------------------------------------------------------------------------------------------
+        private static bool AcceptAllCertificates(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+        //-------------------------------------------------------------------------------------------------------------
+        {
+            return true;
         }
 
         //-------------------------------------------------------------------------------------------------------------

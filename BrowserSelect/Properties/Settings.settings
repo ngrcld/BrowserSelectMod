@@ -17,5 +17,8 @@
     <Setting Name="DefaultBrowser" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="RedirectPolicy" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Never</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

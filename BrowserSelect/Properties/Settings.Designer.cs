@@ -80,5 +80,17 @@ namespace BrowserSelect.Properties {
                 this["DefaultBrowser"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Never")]
+        public string RedirectPolicy {
+            get {
+                return ((string)(this["RedirectPolicy"]));
+            }
+            set {
+                this["RedirectPolicy"] = value;
+            }
+        }
     }
 }

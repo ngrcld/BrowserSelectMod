@@ -9,6 +9,8 @@ using Microsoft.Win32;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using IniParser;
+using IniParser.Model;
 
 using BrowserSelect.Properties;
 
@@ -74,6 +76,14 @@ namespace BrowserSelect
                             browsersToRemove.Add(browser);
                 }
 
+                //check for Firefox Profiles
+                foreach (BrowserModel browser in browsers)
+                {
+                    if (browser.name.Contains("Firefox"))
+                        if (AddFirefoxProfiles(browsersToAdd, browser))
+                            browsersToRemove.Add(browser);
+                }
+
                 if (browsersToAdd.Count > 0)
                 {
                     browsers.AddRange(browsersToAdd);
@@ -100,6 +110,9 @@ namespace BrowserSelect
         private bool AddChromiumProfiles(List<BrowserModel> browsers, BrowserModel browser)
         //-------------------------------------------------------------------------------------------------------------
         {
+            if (browser == null)
+                return false;
+
             string vendorDataFolder = browser.exec.Replace(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + "\\", ""); //bad assumption?
             vendorDataFolder = vendorDataFolder.Replace(Path.GetFileName(browser.exec), "");
             vendorDataFolder = vendorDataFolder.Replace("\\Application", ""); //cleaner way to do this?
@@ -108,24 +121,58 @@ namespace BrowserSelect
             chromiumUserDataFolder += "User Data";
             List<string> chromiumProfiles = FindChromiumProfiles(chromiumUserDataFolder, browser.profileIcon);
 
-//          if (chromiumProfiles.Count > 1)
+            //add the Chromium instances and remove the default one
+            foreach (string profile in chromiumProfiles)
             {
-                //add the Chromium instances and remove the default one
-                foreach (string profile in chromiumProfiles)
+                browsers.Add(new BrowserModel()
                 {
-                    browsers.Add(new BrowserModel()
-                    {
-                        name = browser.name + " (" + GetChromiumProfileName(chromiumUserDataFolder + "\\" + profile) + ")",
-                        exec = browser.exec,
-                        icon = icon2String(IconExtractor.fromFile(chromiumUserDataFolder + "\\" + profile + "\\" + browser.profileIcon)),
-                        additionalArgs = String.Format("--profile-directory={0}", profile)
-                    });
-                }
-
-                return true;
+                    name = browser.name + " (" + GetChromiumProfileName(chromiumUserDataFolder + "\\" + profile) + ")",
+                    exec = browser.exec,
+                    icon = icon2String(IconExtractor.fromFile(chromiumUserDataFolder + "\\" + profile + "\\" + browser.profileIcon)),
+                    additionalArgs = String.Format("--profile-directory={0}", profile)
+                });
             }
 
-//          return false;
+            return true;
+        }
+
+        //-------------------------------------------------------------------------------------------------------------
+        private bool AddFirefoxProfiles(List<BrowserModel> browsers, BrowserModel browser)
+        //-------------------------------------------------------------------------------------------------------------
+        {
+            if (browser == null)
+                return false;
+
+            var iniFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Mozilla\Firefox\profiles.ini");
+            var iniParser = new FileIniDataParser();
+            IniData iniData = iniParser.ReadFile(iniFile);
+
+            string defaultProfile = null;
+            foreach (var section in iniData.Sections)
+            {
+                if (section.SectionName.StartsWith("Install"))
+                {
+                    defaultProfile = section.Keys["Default"];
+                }
+            }
+            foreach (var section in iniData.Sections)
+            {
+                if (section.SectionName.StartsWith("Profile"))
+                {
+                    if (section.Keys["Path"] == defaultProfile)
+                        continue;
+
+                    browsers.Add(new BrowserModel()
+                    {
+                        name = browser.name + " (" + section.Keys["Name"] + ")",
+                        exec = browser.exec,
+                        icon = icon2String(IconExtractor.fromFile(browser.exec)),
+                        additionalArgs = String.Format("-P \"{0}\" -new-tab", section.Keys["Name"])
+                    });
+                }
+            }
+
+            return true;
         }
 
         //-------------------------------------------------------------------------------------------------------------

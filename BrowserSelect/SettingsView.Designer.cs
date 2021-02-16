@@ -44,18 +44,22 @@
             this.type = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.pattern = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.browser = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.RedirectPolicy = new System.Windows.Forms.ComboBox();
             CancelButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RulesGrid)).BeginInit();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // CancelButton
             // 
             CancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             CancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            CancelButton.Location = new System.Drawing.Point(445, 511);
+            CancelButton.Location = new System.Drawing.Point(445, 604);
             CancelButton.Name = "CancelButton";
             CancelButton.Size = new System.Drawing.Size(75, 23);
             CancelButton.TabIndex = 8;
@@ -67,9 +71,9 @@
             // SetDefaultButton
             // 
             this.SetDefaultButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.SetDefaultButton.Location = new System.Drawing.Point(6, 63);
+            this.SetDefaultButton.Location = new System.Drawing.Point(3, 63);
             this.SetDefaultButton.Name = "SetDefaultButton";
-            this.SetDefaultButton.Size = new System.Drawing.Size(202, 23);
+            this.SetDefaultButton.Size = new System.Drawing.Size(214, 23);
             this.SetDefaultButton.TabIndex = 0;
             this.SetDefaultButton.Text = "Set as &OS Default Browser";
             this.SetDefaultButton.UseVisualStyleBackColor = true;
@@ -78,9 +82,9 @@
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label1.Location = new System.Drawing.Point(6, 18);
+            this.label1.Location = new System.Drawing.Point(3, 18);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(208, 45);
+            this.label1.Size = new System.Drawing.Size(211, 45);
             this.label1.TabIndex = 1;
             this.label1.Text = "BrowserSelect must be set as default browser for it to function correctly.  This " +
     "button will set it as the default browser.";
@@ -95,7 +99,7 @@
             this.groupBox1.Controls.Add(this.BrowserUpButton);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(220, 435);
+            this.groupBox1.Size = new System.Drawing.Size(220, 449);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Available Browsers";
@@ -103,9 +107,9 @@
             // RefreshButton
             // 
             this.RefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.RefreshButton.Location = new System.Drawing.Point(6, 406);
+            this.RefreshButton.Location = new System.Drawing.Point(6, 416);
             this.RefreshButton.Name = "RefreshButton";
-            this.RefreshButton.Size = new System.Drawing.Size(217, 23);
+            this.RefreshButton.Size = new System.Drawing.Size(211, 23);
             this.RefreshButton.TabIndex = 2;
             this.RefreshButton.Text = "&Refresh Browser List";
             this.RefreshButton.UseVisualStyleBackColor = true;
@@ -114,7 +118,7 @@
             // BrowserDownButton
             // 
             this.BrowserDownButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BrowserDownButton.Location = new System.Drawing.Point(142, 377);
+            this.BrowserDownButton.Location = new System.Drawing.Point(142, 387);
             this.BrowserDownButton.Name = "BrowserDownButton";
             this.BrowserDownButton.Size = new System.Drawing.Size(75, 23);
             this.BrowserDownButton.TabIndex = 14;
@@ -129,7 +133,7 @@
             this.BrowserList.FormattingEnabled = true;
             this.BrowserList.Location = new System.Drawing.Point(3, 16);
             this.BrowserList.Name = "BrowserList";
-            this.BrowserList.Size = new System.Drawing.Size(214, 349);
+            this.BrowserList.Size = new System.Drawing.Size(214, 364);
             this.BrowserList.TabIndex = 0;
             this.BrowserList.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.BrowserList_ItemCheck);
             this.BrowserList.SelectedIndexChanged += new System.EventHandler(this.BrowserList_SelectedIndexChanged);
@@ -137,7 +141,7 @@
             // BrowserUpButton
             // 
             this.BrowserUpButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BrowserUpButton.Location = new System.Drawing.Point(6, 377);
+            this.BrowserUpButton.Location = new System.Drawing.Point(6, 387);
             this.BrowserUpButton.Name = "BrowserUpButton";
             this.BrowserUpButton.Size = new System.Drawing.Size(75, 23);
             this.BrowserUpButton.TabIndex = 13;
@@ -150,11 +154,12 @@
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox2.Controls.Add(this.SetDefaultButton);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Location = new System.Drawing.Point(15, 453);
+            this.groupBox2.Location = new System.Drawing.Point(12, 553);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(214, 99);
+            this.groupBox2.Size = new System.Drawing.Size(220, 99);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Default Browser";
             // 
             // groupBox3
             // 
@@ -171,7 +176,7 @@
             this.groupBox3.Controls.Add(this.RulesGrid);
             this.groupBox3.Location = new System.Drawing.Point(235, 12);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(607, 540);
+            this.groupBox3.Size = new System.Drawing.Size(607, 640);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Rules";
@@ -179,7 +184,7 @@
             // RuleDownButton
             // 
             this.RuleDownButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.RuleDownButton.Location = new System.Drawing.Point(86, 488);
+            this.RuleDownButton.Location = new System.Drawing.Point(86, 572);
             this.RuleDownButton.Name = "RuleDownButton";
             this.RuleDownButton.Size = new System.Drawing.Size(75, 23);
             this.RuleDownButton.TabIndex = 12;
@@ -190,7 +195,7 @@
             // RuleUpButton
             // 
             this.RuleUpButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.RuleUpButton.Location = new System.Drawing.Point(5, 488);
+            this.RuleUpButton.Location = new System.Drawing.Point(5, 572);
             this.RuleUpButton.Name = "RuleUpButton";
             this.RuleUpButton.Size = new System.Drawing.Size(75, 23);
             this.RuleUpButton.TabIndex = 11;
@@ -203,7 +208,7 @@
             this.DefaultBrowserList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.DefaultBrowserList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.DefaultBrowserList.FormattingEnabled = true;
-            this.DefaultBrowserList.Location = new System.Drawing.Point(220, 511);
+            this.DefaultBrowserList.Location = new System.Drawing.Point(220, 604);
             this.DefaultBrowserList.Name = "DefaultBrowserList";
             this.DefaultBrowserList.Size = new System.Drawing.Size(219, 21);
             this.DefaultBrowserList.TabIndex = 10;
@@ -213,7 +218,7 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(5, 516);
+            this.label3.Location = new System.Drawing.Point(5, 609);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(209, 13);
             this.label3.TabIndex = 9;
@@ -236,7 +241,7 @@
             this.SaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.SaveButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.SaveButton.Enabled = false;
-            this.SaveButton.Location = new System.Drawing.Point(526, 511);
+            this.SaveButton.Location = new System.Drawing.Point(526, 604);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(75, 23);
             this.SaveButton.TabIndex = 5;
@@ -256,7 +261,7 @@
             this.browser});
             this.RulesGrid.Location = new System.Drawing.Point(6, 34);
             this.RulesGrid.Name = "RulesGrid";
-            this.RulesGrid.Size = new System.Drawing.Size(595, 447);
+            this.RulesGrid.Size = new System.Drawing.Size(595, 532);
             this.RulesGrid.TabIndex = 1;
             this.RulesGrid.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.RulesGrid_CellBeginEdit);
             this.RulesGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.RulesGrid_CellClick);
@@ -289,12 +294,49 @@
             this.browser.Name = "browser";
             this.browser.Width = 51;
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox4.Controls.Add(this.label4);
+            this.groupBox4.Controls.Add(this.RedirectPolicy);
+            this.groupBox4.Location = new System.Drawing.Point(15, 467);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(217, 82);
+            this.groupBox4.TabIndex = 11;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Redirect Policy";
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label4.Location = new System.Drawing.Point(3, 21);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(211, 27);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Select how URL\'s containing redirects (eg: bit.ly) are expanded";
+            // 
+            // RedirectPolicy
+            // 
+            this.RedirectPolicy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.RedirectPolicy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.RedirectPolicy.FormattingEnabled = true;
+            this.RedirectPolicy.Items.AddRange(new object[] {
+            "Never",
+            "First Redirect",
+            "All Redirects"});
+            this.RedirectPolicy.Location = new System.Drawing.Point(3, 55);
+            this.RedirectPolicy.Name = "RedirectPolicy";
+            this.RedirectPolicy.Size = new System.Drawing.Size(208, 21);
+            this.RedirectPolicy.TabIndex = 13;
+            this.RedirectPolicy.SelectionChangeCommitted += new System.EventHandler(this.RedirectPolicy_SelectionChangeCommitted);
+            // 
             // SettingsView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = CancelButton;
-            this.ClientSize = new System.Drawing.Size(854, 561);
+            this.ClientSize = new System.Drawing.Size(854, 661);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -309,6 +351,7 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RulesGrid)).EndInit();
+            this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -334,5 +377,8 @@
         private System.Windows.Forms.Button RuleUpButton;
         private System.Windows.Forms.Button BrowserDownButton;
         private System.Windows.Forms.Button BrowserUpButton;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox RedirectPolicy;
     }
 }

@@ -74,6 +74,11 @@ namespace BrowserSelect
             else
                 DefaultBrowserList.SelectedItem = Settings.Default.DefaultBrowser;
 
+            if (String.IsNullOrEmpty(Settings.Default.RedirectPolicy))
+                RedirectPolicy.SelectedIndex = 0;
+            else
+                RedirectPolicy.SelectedItem = Settings.Default.RedirectPolicy;
+
             //populate rules list data source and bind it to its grid
             foreach (var rule in Settings.Default.Rules)
                 rules.Add(rule);
@@ -131,6 +136,15 @@ namespace BrowserSelect
             SetDefaultButton.Enabled = false;
         }
 
+        //-------------------------------------------------------------------------------------------------------------
+        private void RedirectPolicy_SelectionChangeCommitted(object sender, EventArgs e)
+        //-------------------------------------------------------------------------------------------------------------
+        {
+            Settings.Default.RedirectPolicy = (string)((ComboBox)sender).SelectedItem;
+            isDirty = true;
+            UpdateUIState();
+        }
+        
         //-------------------------------------------------------------------------------------------------------------
         private void SaveButton_Click(object sender, EventArgs e)
         //-------------------------------------------------------------------------------------------------------------
