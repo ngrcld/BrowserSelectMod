@@ -9,6 +9,12 @@ You may click on the desired browser. You may also press Esc (or click the X) to
 
 BrowserSelectMod has been tested on Windows 10. Requires **.NET Framework 4**.
 
+### My modifications ###
+* Removed "Always" buttons and browser labels
+* Removed shortcuts
+* Smaller icons
+* Register for .html and .htm file types
+
 # Related links
 
 [AlternativeTo](http://alternativeto.net/software/choosy/)
