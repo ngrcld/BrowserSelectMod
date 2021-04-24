@@ -10,10 +10,9 @@ You may click on the desired browser. You may also press Esc (or click the X) to
 BrowserSelectMod has been tested on Windows 10. Requires **.NET Framework 4**.
 
 ### My modifications ###
-* Removed "Always" buttons and browser labels
-* Removed shortcuts
-* Smaller icons
+* More compact: removed "Always" buttons and browser labels, removed shortcuts, smaller icons
 * Register for .html and .htm file types
+* Portable app (saves settings in the same folder of the exe)
 
 # Related links
 
