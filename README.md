@@ -12,4 +12,5 @@ BrowserSelectMod has been tested on Windows 10. Requires **.NET Framework 4**.
 # Related links
 
 [AlternativeTo](http://alternativeto.net/software/choosy/)
+
 [Choosy](https://www.choosyosx.com/)
