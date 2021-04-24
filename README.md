@@ -11,6 +11,7 @@ BrowserSelectMod has been tested on Windows 10. Requires **.NET Framework 4**.
 
 ### My modifications ###
 * More compact: removed "Always" buttons and browser labels, removed shortcuts, smaller icons
+* Removed support for browser profiles (did not work for me)
 * Register for .html and .htm file types
 * Portable app (saves settings in the same folder of the exe)
 
