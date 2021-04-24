@@ -12,9 +12,9 @@ using Newtonsoft.Json.Linq;
 using IniParser;
 using IniParser.Model;
 
-using BrowserSelect.Properties;
+using BrowserSelectMod.Properties;
 
-namespace BrowserSelect
+namespace BrowserSelectMod
 {
     //=============================================================================================================
     class BrowserFinder
@@ -41,7 +41,7 @@ namespace BrowserSelect
                         name = "Edge (Classic)",
                         // #34
                         exec = "shell:AppsFolder\\Microsoft.MicrosoftEdge_8wekyb3d8bbwe!MicrosoftEdge",
-                        icon = icon2String(IconExtractor.fromFile(edge_path))
+                        icon = Icon2String(IconExtractor.FromFile(edge_path))
                     });
 
                 //gather browsers from registry
@@ -57,7 +57,7 @@ namespace BrowserSelect
                 //remove duplicates
                 browsers = browsers.GroupBy(browser => browser.exec)
                     .Select(group => group.First()).ToList();
-
+                /*
                 List<BrowserModel> browsersToAdd = new List<BrowserModel>();
                 List<BrowserModel> browsersToRemove = new List<BrowserModel>();
                 //check for Edge (Chromium) profiles
@@ -83,7 +83,7 @@ namespace BrowserSelect
                         if (AddFirefoxProfiles(browsersToAdd, browser))
                             browsersToRemove.Add(browser);
                 }
-
+                
                 if (browsersToAdd.Count > 0)
                 {
                     browsers.AddRange(browsersToAdd);
@@ -94,7 +94,7 @@ namespace BrowserSelect
                     foreach (BrowserModel browser in browsersToRemove)
                         browsers.Remove(browser);
                 }
-
+                */
                 //sort
                 browsers.Sort();
 
@@ -119,7 +119,7 @@ namespace BrowserSelect
 
             string chromiumUserDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), vendorDataFolder);
             chromiumUserDataFolder += "User Data";
-            List<string> chromiumProfiles = FindChromiumProfiles(chromiumUserDataFolder, browser.profileIcon);
+            List<string> chromiumProfiles = FindChromiumProfiles(chromiumUserDataFolder, browser.ProfileIcon);
 
             //add the Chromium instances and remove the default one
             foreach (string profile in chromiumProfiles)
@@ -128,7 +128,7 @@ namespace BrowserSelect
                 {
                     name = browser.name + " (" + GetChromiumProfileName(chromiumUserDataFolder + "\\" + profile) + ")",
                     exec = browser.exec,
-                    icon = icon2String(IconExtractor.fromFile(chromiumUserDataFolder + "\\" + profile + "\\" + browser.profileIcon)),
+                    icon = Icon2String(IconExtractor.FromFile(chromiumUserDataFolder + "\\" + profile + "\\" + browser.ProfileIcon)),
                     additionalArgs = String.Format("--profile-directory={0}", profile)
                 });
             }
@@ -166,7 +166,7 @@ namespace BrowserSelect
                     {
                         name = browser.name + " (" + section.Keys["Name"] + ")",
                         exec = browser.exec,
-                        icon = icon2String(IconExtractor.fromFile(browser.exec)),
+                        icon = Icon2String(IconExtractor.FromFile(browser.exec)),
                         additionalArgs = String.Format("-P \"{0}\" -new-tab", section.Keys["Name"])
                     });
                 }
@@ -247,7 +247,7 @@ namespace BrowserSelect
                         {
                             name = name,
                             exec = exec,
-                            icon = icon2String(IconExtractor.fromFile(exec))
+                            icon = Icon2String(IconExtractor.FromFile(exec))
                         });
                     }
                     catch (NullReferenceException)
@@ -265,7 +265,7 @@ namespace BrowserSelect
         }
 
         //-------------------------------------------------------------------------------------------------------------
-        public string icon2String(Icon myIcon)
+        public string Icon2String(Icon myIcon)
         //-------------------------------------------------------------------------------------------------------------
         {
             byte[] bytes;

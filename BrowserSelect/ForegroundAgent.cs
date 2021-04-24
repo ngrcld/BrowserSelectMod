@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace BrowserSelect
+namespace BrowserSelectMod
 {
     //=============================================================================================================
     // acquired from:
@@ -11,8 +11,6 @@ namespace BrowserSelect
     class ForegroundAgent
     //=============================================================================================================
     {
-        private const int SW_SHOWNORMAL = 1;
-        private const int SW_SHOWMAXIMIZED = 3;
         private const int SW_RESTORE = 9;
         private const int GWL_STYLE = -16;
         private const UInt32 WS_MAXIMIZE = 0x1000000;

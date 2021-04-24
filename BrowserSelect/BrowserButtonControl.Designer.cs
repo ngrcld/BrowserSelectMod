@@ -1,4 +1,4 @@
-﻿namespace BrowserSelect {
+﻿namespace BrowserSelectMod {
     partial class BrowserButtonControl {
         /// <summary> 
         /// Required designer variable.
@@ -24,9 +24,6 @@
         /// </summary>
         private void InitializeComponent() {
             this.BrowserIcon = new System.Windows.Forms.PictureBox();
-            this.BrowserLabel = new System.Windows.Forms.Label();
-            this.ShortcutLabel = new System.Windows.Forms.Label();
-            this.CreateRuleButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.BrowserIcon)).BeginInit();
             this.SuspendLayout();
             // 
@@ -34,49 +31,18 @@
             // 
             this.BrowserIcon.Location = new System.Drawing.Point(0, 0);
             this.BrowserIcon.Name = "BrowserIcon";
-            this.BrowserIcon.Size = new System.Drawing.Size(128, 128);
+            this.BrowserIcon.Size = new System.Drawing.Size(64, 64);
             this.BrowserIcon.TabIndex = 0;
             this.BrowserIcon.TabStop = false;
             // 
-            // BrowserLabel
-            // 
-            this.BrowserLabel.Location = new System.Drawing.Point(3, 131);
-            this.BrowserLabel.Name = "BrowserLabel";
-            this.BrowserLabel.Size = new System.Drawing.Size(122, 18);
-            this.BrowserLabel.TabIndex = 1;
-            this.BrowserLabel.Text = "<browser>";
-            this.BrowserLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // ShortcutLabel
-            // 
-            this.ShortcutLabel.Location = new System.Drawing.Point(3, 147);
-            this.ShortcutLabel.Name = "ShortcutLabel";
-            this.ShortcutLabel.Size = new System.Drawing.Size(122, 13);
-            this.ShortcutLabel.TabIndex = 2;
-            this.ShortcutLabel.Text = "<shortcuts>";
-            this.ShortcutLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // CreateRuleButton
-            // 
-            this.CreateRuleButton.Location = new System.Drawing.Point(0, 161);
-            this.CreateRuleButton.Name = "CreateRuleButton";
-            this.CreateRuleButton.Size = new System.Drawing.Size(125, 20);
-            this.CreateRuleButton.TabIndex = 3;
-            this.CreateRuleButton.Text = "Create Rule";
-            this.CreateRuleButton.UseVisualStyleBackColor = true;
-            this.CreateRuleButton.Click += new System.EventHandler(this.RuleButton_Click);
-            // 
             // BrowserButtonControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.Controls.Add(this.CreateRuleButton);
-            this.Controls.Add(this.ShortcutLabel);
-            this.Controls.Add(this.BrowserLabel);
+            //this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            //this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            //this.AutoSize = true;
             this.Controls.Add(this.BrowserIcon);
             this.Name = "BrowserButtonControl";
-            this.Size = new System.Drawing.Size(130, 185);
+            this.Size = new System.Drawing.Size(64, 64);
             ((System.ComponentModel.ISupportInitialize)(this.BrowserIcon)).EndInit();
             this.ResumeLayout(false);
 
@@ -85,8 +51,5 @@
         #endregion
 
         private System.Windows.Forms.PictureBox BrowserIcon;
-        private System.Windows.Forms.Label BrowserLabel;
-        private System.Windows.Forms.Label ShortcutLabel;
-        private System.Windows.Forms.Button CreateRuleButton;
     }
 }

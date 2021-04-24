@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 
-using BrowserSelect.Properties;
+using BrowserSelectMod.Properties;
 
-namespace BrowserSelect
+namespace BrowserSelectMod
 {
     class RulesEngine
     {

@@ -8,9 +8,9 @@ using Microsoft.Win32;
 
 using Newtonsoft.Json;
 
-using BrowserSelect.Properties;
+using BrowserSelectMod.Properties;
 
-namespace BrowserSelect
+namespace BrowserSelectMod
 {
     //=============================================================================================================
     public partial class SettingsView : Form
@@ -21,9 +21,9 @@ namespace BrowserSelect
         private bool isDirtyUI = false;
         private bool isDirtyCache = false;
 
-        private BrowserSelectView parentView;
+        private readonly BrowserSelectView parentView;
         List<BrowserModel> browsers;
-        private ObservableCollection<RuleModel> rules = new ObservableCollection<RuleModel>();
+        private readonly ObservableCollection<RuleModel> rules = new ObservableCollection<RuleModel>();
 
         //-------------------------------------------------------------------------------------------------------------
         public SettingsView(Form parentForm)
@@ -47,7 +47,7 @@ namespace BrowserSelect
                 var defaultBrowser = key?.GetValue("ProgId");
 
                 //disable the set default if already default
-                if (defaultBrowser != null && (string)defaultBrowser == "BrowserSelectURL")
+                if (defaultBrowser != null && (string)defaultBrowser == "BrowserSelectModURL")
                     SetDefaultButton.Enabled = false;
             }
 
@@ -60,7 +60,7 @@ namespace BrowserSelect
             browsers = finder.FindBrowsers();
 
             var browserColumn = ((DataGridViewComboBoxColumn)RulesGrid.Columns["browser"]);
-            DefaultBrowserList.Items.Add("<choose with BrowserSelect>");
+            DefaultBrowserList.Items.Add("<choose with BrowserSelectMod>");
 
             foreach (BrowserModel browser in browsers)
             {
@@ -124,13 +124,13 @@ namespace BrowserSelect
             using (RegistryKey key = Registry.CurrentUser.CreateSubKey(
                     @"Software\Microsoft\Windows\Shell\Associations\UrlAssociations\http\UserChoice"))
             {
-                key.SetValue("ProgId", "BrowserSelectURL");
+                key.SetValue("ProgId", "BrowserSelectModURL");
             }
             //https
             using (RegistryKey key = Registry.CurrentUser.CreateSubKey(
                     @"Software\Microsoft\Windows\Shell\Associations\UrlAssociations\https\UserChoice"))
             {
-                key.SetValue("ProgId", "BrowserSelectURL");
+                key.SetValue("ProgId", "BrowserSelectModURL");
             }
 
             SetDefaultButton.Enabled = false;
@@ -154,7 +154,7 @@ namespace BrowserSelect
             foreach (var rule in rules)
             {
                 //check if rule has both pattern and browser defined
-                if (rule.isValid())
+                if (rule.IsValid())
                 {
                     //add it to rule list
                     Settings.Default.Rules.Add(rule.ToString());
@@ -162,7 +162,7 @@ namespace BrowserSelect
                 else
                 {
                     //ignore rule if both pattern and browser is empty otherwise inform user of missing part
-                    var err = rule.errorMessage();
+                    var err = rule.ErrorMessage();
                     if (err.Length > 0)
                         MessageBox.Show("Invalid Rule: " + err);
                 }
@@ -220,7 +220,7 @@ namespace BrowserSelect
             browserColumn.Items.Clear();
             BrowserList.Items.Clear();
             DefaultBrowserList.Items.Clear();
-            DefaultBrowserList.Items.Add("<choose with BrowserSelect>");
+            DefaultBrowserList.Items.Add("<choose with BrowserSelectMod>");
 
             foreach (BrowserModel browser in browsers)
             {
@@ -267,7 +267,7 @@ namespace BrowserSelect
             {
                 int idxNew = idxSelected - 1;
                 
-                BrowserModel modelSelected = new BrowserModel();
+                BrowserModel modelSelected;
                 modelSelected = browsers[idxSelected];
                 browsers[idxSelected] = browsers[idxNew];
                 BrowserList.Items[idxSelected] = browsers[idxNew];
@@ -302,7 +302,7 @@ namespace BrowserSelect
             {
                 int idxNew = idxSelected + 1;
 
-                BrowserModel browserSelected = new BrowserModel();
+                BrowserModel browserSelected;
                 browserSelected = browsers[idxSelected];
                 browsers[idxSelected] = browsers[idxNew];
                 BrowserList.Items[idxSelected] = browsers[idxNew];

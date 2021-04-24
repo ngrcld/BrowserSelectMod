@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace BrowserSelect
+namespace BrowserSelectMod
 {
     //=============================================================================================================
     public partial class SettingsButtonControl : UserControl
@@ -17,8 +17,8 @@ namespace BrowserSelect
             var verticalButton = new VerticalButton();
             verticalButton.Text = "Settings";
             verticalButton.Anchor = AnchorStyles.Right;
-            verticalButton.Size = new Size(25, 75);
-            verticalButton.Top = 75/2;
+            verticalButton.Size = new Size(25, 60);
+            verticalButton.Top = 3;
             verticalButton.Left = 0;
             verticalButton.Click += SettingsButton_Click;
             Controls.Add(verticalButton);

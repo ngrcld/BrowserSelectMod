@@ -1,4 +1,4 @@
-﻿namespace BrowserSelect {
+﻿namespace BrowserSelectMod {
     partial class SettingsView {
         /// <summary>
         /// Required designer variable.
@@ -86,7 +86,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(211, 45);
             this.label1.TabIndex = 1;
-            this.label1.Text = "BrowserSelect must be set as default browser for it to function correctly.  This " +
+            this.label1.Text = "BrowserSelectMod must be set as default browser for it to function correctly.  This " +
     "button will set it as the default browser.";
             // 
             // groupBox1

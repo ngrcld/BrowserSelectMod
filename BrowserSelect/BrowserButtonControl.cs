@@ -2,27 +2,24 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace BrowserSelect
+namespace BrowserSelectMod
 {
     //=============================================================================================================
     public partial class BrowserButtonControl : UserControl
     //=============================================================================================================
     {
         public BrowserModel browser;
-        public bool createRule { get; set; } = false;
+        public bool CreateRule { get; set; } = false;
 
         //-------------------------------------------------------------------------------------------------------------
-        public BrowserButtonControl(BrowserModel browser, int index)
+        public BrowserButtonControl(BrowserModel browser)
         //-------------------------------------------------------------------------------------------------------------
         {
             InitializeComponent();
 
             this.browser = browser;
 
-            BrowserLabel.Text = browser.name;
-            ShortcutLabel.Text = "( " + Convert.ToString(index + 1) + "," + String.Join(",", browser.shortcuts) + " )";
-            ShortcutLabel.ForeColor = Color.FromKnownColor(KnownColor.GrayText);
-            BrowserIcon.Image = browser.string2Icon();//.ToBitmap();
+            BrowserIcon.Image = browser.String2Icon();//.ToBitmap();
             BrowserIcon.SizeMode = PictureBoxSizeMode.Zoom;
         }
 
@@ -52,7 +49,7 @@ namespace BrowserSelect
         private void RuleButton_Click(object sender, EventArgs e)
         //-------------------------------------------------------------------------------------------------------------
         {
-            createRule = true;
+            CreateRule = true;
         }
     }
 }

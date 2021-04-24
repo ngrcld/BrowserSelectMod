@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace BrowserSelect
+namespace BrowserSelectMod
 {
     //=============================================================================================================
     public class BrowserModel : IComparable
@@ -27,7 +27,7 @@ namespace BrowserSelect
         }
 
         //-------------------------------------------------------------------------------------------------------------
-        public Image string2Icon()
+        public Image String2Icon()
         //-------------------------------------------------------------------------------------------------------------
         {
             byte[] byteArray = Convert.FromBase64String(this.icon);
@@ -41,7 +41,7 @@ namespace BrowserSelect
         }
 
         //-------------------------------------------------------------------------------------------------------------
-        public string privateArg
+        public string PrivateArg
         //-------------------------------------------------------------------------------------------------------------
         {
             get
@@ -63,7 +63,7 @@ namespace BrowserSelect
         }
 
         //-------------------------------------------------------------------------------------------------------------
-        public string profileIcon
+        public string ProfileIcon
         //-------------------------------------------------------------------------------------------------------------
         {
             get
@@ -78,7 +78,7 @@ namespace BrowserSelect
         }
 
         //-------------------------------------------------------------------------------------------------------------
-        public List<char> shortcuts => Regex.Replace(name, @"[^A-Za-z\s]", "").Split(' ')
+        public List<char> Shortcuts => Regex.Replace(name, @"[^A-Za-z\s]", "").Split(' ')
             .Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Substring(0, 1).ToLower()[0]).ToList();
 
         //-------------------------------------------------------------------------------------------------------------

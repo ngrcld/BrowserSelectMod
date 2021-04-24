@@ -1,4 +1,4 @@
-﻿namespace BrowserSelect
+﻿namespace BrowserSelectMod
 {
     partial class SettingsButtonControl
     {
@@ -30,12 +30,12 @@
         {
             this.SuspendLayout();
             // 
-            // SetttingsButtonControl
+            // SettingsButtonControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "SettingsButtonControl";
-            this.Size = new System.Drawing.Size(25, 180);
+            this.Size = new System.Drawing.Size(25, 63);
             this.ResumeLayout(false);
 
         }

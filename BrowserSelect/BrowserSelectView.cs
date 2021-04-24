@@ -4,9 +4,9 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-using BrowserSelect.Properties;
+using BrowserSelectMod.Properties;
 
-namespace BrowserSelect
+namespace BrowserSelectMod
 {
     //=============================================================================================================
     public partial class BrowserSelectView : Form
@@ -45,12 +45,12 @@ namespace BrowserSelect
             // add a button for each enabled browser to the form
             foreach (var browser in browsers)
             {
-                var control = new BrowserButtonControl(browser, index);
+                var control = new BrowserButtonControl(browser);
                 control.Left =  control.Width * index++;
                 totalWidth += control.Width;
                 control.Click += BrowserButton_Click;
                 Controls.Add(control);
-                tooltipUrl.SetToolTip(control, BrowserSelectApp.url);
+                tooltipUrl.SetToolTip(control, BrowserSelectApp.Url);
             }
 
             ResumeLayout();
@@ -67,26 +67,25 @@ namespace BrowserSelect
         private void BrowserSelectView_Load(object sender, EventArgs e)
         //-------------------------------------------------------------------------------------------------------------
         {
+            Visible = false;
             AutoSize = true;
-            AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            Icon = IconExtractor.fromFile(Application.ExecutablePath); // set the form icon from .exe file icon
+            Icon = IconExtractor.FromFile(Application.ExecutablePath); // set the form icon from .exe file icon
             KeyPreview = true;
             MinimizeBox = false;
             MaximizeBox = false;
-            Text = BrowserSelectApp.launchWithUrl ? BrowserSelectApp.url : "Browser Select";
+            Text = BrowserSelectApp.LaunchWithUrl ? BrowserSelectApp.Url : "BrowserSelectMod";
 
             // create a wildcard rule for this domain (create rule button)
             RulesEngine engine = new RulesEngine();
-            autoRule = engine.GenerateRule(BrowserSelectApp.url);
+            autoRule = engine.GenerateRule(BrowserSelectApp.Url);
 
             // add Settings button
             var settingsButtonControl = new SettingsButtonControl();
             Controls.Add(settingsButtonControl);
-            tooltipUrl.SetToolTip(settingsButtonControl, BrowserSelectApp.url);
+            tooltipUrl.SetToolTip(settingsButtonControl, BrowserSelectApp.Url);
 
             RefreshBrowserListUI();
+            Visible = true;
         }
 
         //-------------------------------------------------------------------------------------------------------------
@@ -111,7 +110,7 @@ namespace BrowserSelect
             UrlProcessor processor = new UrlProcessor();
 
             // check if create rule button was clicked
-            if (button.createRule)
+            if (button.CreateRule)
             {
                 ShowAddRuleMenu(button.browser);
             }
@@ -147,7 +146,7 @@ namespace BrowserSelect
                 // in case ambiguousness of pattern was not determined, should not happen
                 MessageBox.Show(String.Format("Unable to generate rule from this url:\n" +
                                               "{0}",
-                                              BrowserSelectApp.url));
+                                              BrowserSelectApp.Url));
             }
             else
             {
@@ -166,7 +165,7 @@ namespace BrowserSelect
             int i = 1;
             foreach (var browser in browsers)
             {
-                if (browser.shortcuts.Contains(e.KeyChar) || e.KeyChar == (Convert.ToString(i++))[0])
+                if (browser.Shortcuts.Contains(e.KeyChar) || e.KeyChar == (Convert.ToString(i++))[0])
                 {
                     UrlProcessor processor = new UrlProcessor();
                     processor.OpenUrl(browser);

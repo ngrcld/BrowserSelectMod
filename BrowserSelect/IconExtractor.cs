@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace BrowserSelect
+namespace BrowserSelectMod
 {
     //=============================================================================================================
     static class IconExtractor
@@ -14,7 +14,7 @@ namespace BrowserSelect
         //-------------------------------------------------------------------------------------------------------------
 
         //-------------------------------------------------------------------------------------------------------------
-        static public Icon fromFile(string filename)
+        static public Icon FromFile(string filename)
         //-------------------------------------------------------------------------------------------------------------
         {
             IntPtr[] phicon = new IntPtr[] { IntPtr.Zero };

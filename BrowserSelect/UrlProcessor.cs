@@ -7,9 +7,9 @@ using System.Windows.Forms;
 
 using SHDocVw;
 
-using BrowserSelect.Properties;
+using BrowserSelectMod.Properties;
 
-namespace BrowserSelect
+namespace BrowserSelectMod
 {
     //=============================================================================================================
     class UrlProcessor
@@ -23,10 +23,10 @@ namespace BrowserSelect
             if (!string.IsNullOrEmpty(browser.additionalArgs))
                 args.Add(browser.additionalArgs);
             if (incognito)
-                args.Add(browser.privateArg);
+                args.Add(browser.PrivateArg);
             if (browser.exec.ToLower().EndsWith("brave.exe"))
                 args.Add("--");
-            args.Add(BrowserSelectApp.url.Replace("\"", "%22"));
+            args.Add(BrowserSelectApp.Url.Replace("\"", "%22"));
 
             if (browser.exec.EndsWith("iexplore.exe") && !incognito)
             {
@@ -38,7 +38,7 @@ namespace BrowserSelect
                 {
                     if (iExplorer.Name.EndsWith("Internet Explorer"))
                     {
-                        iExplorer.Navigate(BrowserSelectApp.url, 0x800);
+                        iExplorer.Navigate(BrowserSelectApp.Url, 0x800);
                         // for issue #10 (bring IE to focus after opening link)
                         ForegroundAgent.RestoreWindow(iExplorer.HWND);
                         found = true;
@@ -47,12 +47,12 @@ namespace BrowserSelect
                 }
                 if (!found)
                 {
-                    Process.Start(browser.exec, args2Str(args));
+                    Process.Start(browser.exec, Args2Str(args));
                 }
             }
             else
             {
-                Process.Start(browser.exec, args2Str(args));
+                Process.Start(browser.exec, Args2Str(args));
             }
 
             Application.Exit();
@@ -100,7 +100,7 @@ namespace BrowserSelect
             }
 
             //no matches, used the default browser (if configured)
-            if (!String.IsNullOrEmpty(Settings.Default.DefaultBrowser) && Settings.Default.DefaultBrowser != "<choose with BrowserSelect>")
+            if (!String.IsNullOrEmpty(Settings.Default.DefaultBrowser) && Settings.Default.DefaultBrowser != "<choose with BrowserSelectMod>")
             {
                 //MessageBox.Show("Opening with: " + Settings.Default.DefaultBrowser);
                 OpenUrl((BrowserModel)Settings.Default.DefaultBrowser);
@@ -180,14 +180,14 @@ namespace BrowserSelect
         }
 
         //-------------------------------------------------------------------------------------------------------------
-        private string args2Str(List<string> args)
+        private string Args2Str(List<string> args)
         //-------------------------------------------------------------------------------------------------------------
         {
-            return args2Str(args.ToArray());
+            return Args2Str(args.ToArray());
         }
 
         //-------------------------------------------------------------------------------------------------------------
-        private string args2Str(string[] args)
+        private string Args2Str(string[] args)
         //-------------------------------------------------------------------------------------------------------------
         {
             return string.Join(" ", args.Select(EncodeParameterArgument));

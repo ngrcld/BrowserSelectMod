@@ -2,13 +2,13 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace BrowserSelect
+namespace BrowserSelectMod
 {
     //=============================================================================================================
     class VerticalButton : Button
     //=============================================================================================================
     {
-        private StringFormat placeholderFormat = new StringFormat();
+        private readonly StringFormat placeholderFormat = new StringFormat();
         private string placeholderString;
 
         //-------------------------------------------------------------------------------------------------------------

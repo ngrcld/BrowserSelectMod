@@ -6,17 +6,17 @@ using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Windows.Forms;
+using Bluegrams.Application;
+using BrowserSelectMod.Properties;
 
-using BrowserSelect.Properties;
-
-namespace BrowserSelect
+namespace BrowserSelectMod
 {
     //=============================================================================================================
     class BrowserSelectApp
     //=============================================================================================================
     {
-        public static string url { get; set; } = "https://www.google.com";
-        public static bool launchWithUrl { get; set; } = false;
+        public static string Url { get; set; } = "https://www.google.com";
+        public static bool LaunchWithUrl { get; set; } = false;
 
         //-------------------------------------------------------------------------------------------------------------
         /// <summary>
@@ -26,7 +26,9 @@ namespace BrowserSelect
         static void Main(string[] args)
         //-------------------------------------------------------------------------------------------------------------
         {
+            PortableSettingsProvider.ApplyProvider(Properties.Settings.Default);
             BrowserSelectSetup.RegisterAsBrowser();
+            BrowserSelectMod.FileAssociations.EnsureAssociationsSet();
             ConfigureUriParser();
 
             // to prevent loss of settings when updating to new version
@@ -46,11 +48,11 @@ namespace BrowserSelect
             if (args.Length > 0)
             {
                 //check to see if auto select rules match
-                url = args[0];
+                Url = args[0];
                 //normalize the url
-                Uri uri = new UriBuilder(url).Uri;
-                url = uri.AbsoluteUri;
-                launchWithUrl = true;
+                Uri uri = new UriBuilder(Url).Uri;
+                Url = uri.AbsoluteUri;
+                LaunchWithUrl = true;
 
                 UrlProcessor processor = new UrlProcessor();
                 if (processor.ProcessUrl(uri))
